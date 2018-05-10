@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Intro to Python Automation</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					Introduction to Python Automation
+				</section>
+				<section>
+					<h1><span class="fragment">Python is cool...</span><span class="fragment">but what can we do with it really?</span></h1>
+				</section>
+				<section>
+					<section id="fragments">
+						<h2>
+							Use cases
+						</h2>
+						<p>Python can be used to automate...</p>
+						<p class="fragment"></p>
+						<p><span class="fragment">web scraping,</span> <span class="fragment">data gathering,</span> <span class="fragment">texting, </span> <span class="fragment">emailing, </span> <span class="fragment">news summarizing, </span> <span class="fragment">data classifying, </span> <span class="fragment">and the list goes on and on!</span></p>
+					</section>
+				</section>
+				
+				<!-- print statements -->
+				<section>
+					<section data-markdown>
+						<h1>Print Statements (Python 3.6)</h1>
+						```
+						<section data-markdown>
+							# comments are denoted by a hashtag, or a pound symbol, or whatever you want to call it
+							print("Hey, I'm a print statement!") # comments can be inline as well
+							print('Now I\'m a print statement with an escaped single quote.')
+							print("I am a %s print statement." % "string interpolated")
+							print("There is now $%f embedded in this statement." % 32.2523213)
+							print("But we'll round down and make sure it's exactly $%.2f." % 32.2500000)
+							variables = "variables"
+							print("We can put %s in here." % variables)
+							print("And we can %s %s %s." % ("interpolate", "multiple", "strings"))
+						</section>
+						```
+					</section>
+					<section>
+						<h1>Results</h1>
+						<img width="800" data-src="lib/img/print_results.png">
+					</section>
+				</section>
+
+				<!-- math and numbers -->
+				<section>
+					<section data-markdown>
+						<h1>Math and Numbers</h1>
+						```
+						<section data-markdown>
+							# shamelessly stolen from Learn Python The Hard Way
+							# will rework this later
+							print("I will now count my chickens:")
+							print("Hens", 25 + 30 / 6)
+							print("Roosters", 100 - 25 * 3 % 4)
+							print("Now I will count the eggs:")
+							print(3 + 2 + 1 - 5 + 4 % 2 - 1 / 4 + 6)
+							print("Is it true that 3 + 2 < 5 - 7?")
+							print(3 + 2 < 5 - 7)
+							print("What is 3 + 2?", 3 + 2)
+							print("What is 5 - 7?", 5 - 7)
+							print("Oh, that's why it's False.")
+							print("How about some more.")
+							print("Is it greater?", 5 > -2)
+							print("Is it greater or equal?", 5 >= -2)
+							print("Is it less or equal?", 5 <= -2)
+						</section>
+						```
+					</section>
+					<section>
+						<h1>Results</h1>
+						<img width="800" data-src="lib/img/math_and_numbers_results.png">
+					</section>
+				</section>
+
+				<!-- importing libraries -->
+				<section>
+					<section data-markdown>
+						<h1>Print Statements (Python 3.6)</h1>
+						```
+						<section data-markdown>
+							# comments are denoted by a hashtag, or a pound symbol, or whatever you want to call it
+							print("Hey, I'm a print statement!") # comments can be inline as well
+							print('Now I\'m a print statement with an escaped single quote.')
+							print("I am a %s print statement." % "string interpolated")
+							print("There is now $%f embedded in this statement." % 32.2523213)
+							print("But we'll round down and make sure it's exactly $%.2f." % 32.2500000)
+							variables = "variables"
+							print("We can put %s in here." % variables)
+							print("And we can %s %s %s." % ("interpolate", "multiple", "strings"))
+						</section>
+						```
+					</section>
+					<section>
+						<h1>Results</h1>
+						<img width="800" data-src="lib/img/print_results.png">
+					</section>
+				</section>
+
+				<!-- examples -->
+				<section>
+					Real World Examples!
+				</section>
+				<section data-markdown>
+					<h1>Article Summarizer</h1>
+					```
+					<section data-markdown>
+						# -*- coding: utf-8 -*-
+						# below are the commands I had to run in my Terminal to get this program to work
+						'''
+						pip install sumy
+						python -c "import nltk; nltk.download('punkt')"
+						'''
+
+						from __future__ import absolute_import
+						from __future__ import division, print_function, unicode_literals
+
+						from sumy.parsers.html import HtmlParser
+						from sumy.parsers.plaintext import PlaintextParser
+						from sumy.nlp.tokenizers import Tokenizer
+						from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+						from sumy.nlp.stemmers import Stemmer
+						from sumy.utils import get_stop_words
+
+						LANGUAGE = "english"
+						SENTENCES_COUNT = 10
+
+						if __name__ == "__main__":
+							url = "http://money.cnn.com/2018/05/08/news/economy/job-openings-april/index.html"
+							parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+							# or for plain text files
+							# parser = PlaintextParser.from_file("document.txt", Tokenizer(LANGUAGE))
+							stemmer = Stemmer(LANGUAGE)
+
+							summarizer = Summarizer(stemmer)
+							summarizer.stop_words = get_stop_words(LANGUAGE)
+
+							for sentence in summarizer(parser.document, SENTENCES_COUNT):
+								print(sentence)	
+					</section>
+					```
+				</section>
+				<section>
+					<h1>Libraries</h1>
+					<ul>
+						<li><strong>Sumy (text summarizer) - </strong>https://github.com/miso-belica/sumy</li>
+						<li><strong>Twilio (text messaging and calling) - </strong>https://github.com/twilio/twilio-python</li>
+						<li><strong>Google API Python Client (Adsense, analytics, calendar, etc.) - </strong>https://github.com/google/google-api-python-client</li>
+						<li><strong>Awesome Python (an extensive list of Python libraries) - </strong>https://github.com/btbytes/awesome-python</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
